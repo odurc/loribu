@@ -12,14 +12,11 @@ int main(void)
     int n = ringbuff_write(rb, (uint8_t *) data, sizeof data);
     assert(n == sizeof data);
 
+    ringbuff_flush(rb);
+
     uint8_t buffer[128];
     int m = ringbuff_read(rb, buffer, n);
-    assert(n == m);
-
-    n = ringbuff_write(rb, (uint8_t *) data, strlen(data));
-    n += ringbuff_write(rb, (uint8_t *) data, strlen(data) + 1);
-    m = ringbuff_read_until(rb, buffer, sizeof buffer, 0);
-    assert(n == m);
+    assert(m == 0);
 
     ringbuff_destroy(rb);
 
