@@ -169,7 +169,7 @@ uint32_t ringbuff_write(ringbuff_t *rb, const uint8_t *data, uint32_t data_size)
     uint32_t bytes = 0;
     const uint8_t *pdata, dummy = 0;
 
-    pdata =  data ? data : &dummy;
+    pdata = data ? data : &dummy;
 
     // write until all data be written or ring buffer be full
     while (data_size > 0 && !RB_IS_FULL(rb))
@@ -257,7 +257,7 @@ uint32_t ringbuffer_used_space(ringbuff_t *rb)
 
 uint32_t ringbuff_available_space(ringbuff_t *rb)
 {
-    return (rb->size - ((rb->head - rb->tail) % rb->size));
+    return (rb->size - ((rb->head - rb->tail) % rb->size) - 1);
 }
 
 uint32_t ringbuff_is_full(ringbuff_t *rb)
