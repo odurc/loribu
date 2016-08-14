@@ -42,10 +42,10 @@ To use only dynamic memory allocation keep both defines commented out.
 How to use
 ---
 
-To see details how to use the library, please check the API documentation.
+To see details how to use the library, please check the online [API documentation](http://ricardocrudo.github.io/ringbuff).
 
-* @ref ringbuff_manipulation
-* @ref ringbuff_information
+* [Manipulation Functions](@ref ringbuff_manipulation)
+* [Information Functions](@ref ringbuff_information)
 
 
 License
