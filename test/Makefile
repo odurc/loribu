@@ -12,12 +12,13 @@ CFLAGS += -O3
 endif
 
 # flags
+LIB_NAME=$(shell basename ../*.so)
 CFLAGS += -Wall -Wextra
 LDFLAGS += -L.. -Wl,-rpath=..
 
 # includes and libraries
 INCS = -I../src
-LIBS = -lringbuff
+LIBS = -l:$(LIB_NAME)
 
 # source, object and output
 SRC = $(wildcard $(SRC_DIR)/*.c)
@@ -35,5 +36,5 @@ all: $(OUTPUTS)
 clean:
 	rm -f $(SRC_DIR)/*.o *.bin
 
-run-tests:
-	@find -name "*.bin" -exec valgrind --leak-check=full --show-leak-kinds=all {} \;
+run-tests: all
+	@for f in *.bin; do valgrind --leak-check=full --show-leak-kinds=all ./$$f; echo; done
