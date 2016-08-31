@@ -1,16 +1,17 @@
 ringbuff
 ========
 
-A simple ring buffer library implemented in C. It's aimed to be used in microcontrollers
-and other devices with limited resources. However it should work for any system.
+A simple ring buffer library implemented in C. The library can be built to use only static
+memory allocation, what make it interesting to employ in microcontrollers projects or other
+devices used in embedded system.
 
 
 Features
 ---
 
 * no external dependency
-* configurable to not use dynamic memory allocation
-* possibility to use user provided static buffer
+* configurable to use only static memory allocation
+* allows user to provide external variable as buffer
 * useful functions as: read_until, count, search and peek
 
 
@@ -23,20 +24,22 @@ Simply copy the content of src directory to your work directory.
 Configuration
 ---
 
-The configuration of the library is done by setting defines in the header file,
-in the configuration section.
+The configuration of the library is done by setting 'define' macros in the header file,
+under the configuration section.
 
-If you don't want to use dynamic memory allocation you have to define both
-*RINGBUFF_NO_DYNAMIC_ALLOCATION* and *RINGBUFF_NUM_INSTANCES*.
+In order to use only static memory allocation, both 'define' macros need to be declared,
+*RINGBUFF_ONLY_STATIC_ALLOCATION* and *RINGBUFF_MAX_INSTANCES*.
 
-    #define RINGBUFF_NO_DYNAMIC_ALLOCATION
-    #define RINGBUFF_NUM_INSTANCES    4
+    #define RINGBUFF_ONLY_STATIC_ALLOCATION
+    #define RINGBUFF_MAX_INSTANCES    4
 
-The definition *RINGBUFF_NUM_INSTANCES* is used to set how many instances of ring buffer
-object you want to create. You also have the option to use mixed allocation, static and
-dynamic, by defining *RINGBUFF_NUM_INSTANCES* but not *RINGBUFF_NO_DYNAMIC_ALLOCATION*.
+The definition *RINGBUFF_MAX_INSTANCES* is used to set the maximum number of ring buffer instances
+that can be requested. As expected all instances are previously allocated as static variables.
+Note that only the object instances are statically allocated and not the buffer itself. Which means,
+in this setup, the user must to provide the buffer.
 
-To use only dynamic memory allocation keep both defines commented out.
+The default configuration, i.e. when no 'define' macros is declared (or they are kept commented out),
+will use dynamic memory allocation as any regular ring buffer library.
 
 
 How to use
