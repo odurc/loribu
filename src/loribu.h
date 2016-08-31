@@ -20,8 +20,8 @@
  * SOFTWARE.
  */
 
-#ifndef RINGBUFF_H
-#define RINGBUFF_H
+#ifndef LORIBU_H
+#define LORIBU_H
 
 
 /*
@@ -46,8 +46,8 @@
 ************************************************************************************************************************
 */
 
-#define RINGBUFF_ONLY_STATIC_ALLOCATION
-#define RINGBUFF_MAX_INSTANCES    4
+//#define LORIBU_ONLY_STATIC_ALLOCATION
+//#define LORIBU_MAX_INSTANCES    4
 
 
 /*
@@ -57,10 +57,10 @@
 */
 
 /**
- * @struct ringbuff_t
+ * @struct loribu_t
  * An opaque structure representing a ring buffer object
  */
-typedef struct ringbuff_t ringbuff_t;
+typedef struct loribu_t loribu_t;
 
 
 /*
@@ -70,7 +70,7 @@ typedef struct ringbuff_t ringbuff_t;
 */
 
 /**
- * @defgroup ringbuff_manipulation Manipulation Functions
+ * @defgroup loribu_manipulation Manipulation Functions
  * Set of functions to manipulate the ring buffer.
  * @{
  */
@@ -80,9 +80,9 @@ typedef struct ringbuff_t ringbuff_t;
  *
  * @param[in] buffer_size size of the buffer to be created
  *
- * @return pointer to ringbuff object or NULL if memory allocation fail
+ * @return pointer to loribu object or NULL if memory allocation fail
  */
-ringbuff_t *ringbuff_create(uint32_t buffer_size);
+loribu_t *loribu_create(uint32_t buffer_size);
 
 /**
  * Create a ring buffer object from an existing buffer
@@ -90,16 +90,16 @@ ringbuff_t *ringbuff_create(uint32_t buffer_size);
  * @param[in] buffer a static or previously allocated buffer
  * @param[in] buffer_size size of the buffer being passed
  *
- * @return pointer to ringbuff object or NULL if there is no free instances
+ * @return pointer to loribu object or NULL if there is no free instances
  */
-ringbuff_t *ringbuff_create_from(uint8_t *buffer, uint32_t buffer_size);
+loribu_t *loribu_create_from(uint8_t *buffer, uint32_t buffer_size);
 
 /**
  * Destroy a ring buffer object
  *
- * @param[in] rb ringbuff object pointer
+ * @param[in] rb loribu object pointer
  */
-void ringbuff_destroy(ringbuff_t *rb);
+void loribu_destroy(loribu_t *rb);
 
 /**
  * Write bytes in the ring buffer
@@ -112,7 +112,7 @@ void ringbuff_destroy(ringbuff_t *rb);
  *
  * @return number of written bytes
  */
-uint32_t ringbuff_write(ringbuff_t *rb, const uint8_t *data, uint32_t data_size);
+uint32_t loribu_write(loribu_t *rb, const uint8_t *data, uint32_t data_size);
 
 /**
  * Read bytes from ring buffer
@@ -125,7 +125,7 @@ uint32_t ringbuff_write(ringbuff_t *rb, const uint8_t *data, uint32_t data_size)
  *
  * @return number of read bytes
  */
-uint32_t ringbuff_read(ringbuff_t *rb, uint8_t *buffer, uint32_t size);
+uint32_t loribu_read(loribu_t *rb, uint8_t *buffer, uint32_t size);
 
 /**
  * Read bytes from ring buffer until find first occurrence of \a token
@@ -142,7 +142,7 @@ uint32_t ringbuff_read(ringbuff_t *rb, uint8_t *buffer, uint32_t size);
  *
  * @return number of read bytes
  */
-uint32_t ringbuff_read_until(ringbuff_t *rb, uint8_t *buffer, uint32_t buffer_size, uint8_t token);
+uint32_t loribu_read_until(loribu_t *rb, uint8_t *buffer, uint32_t buffer_size, uint8_t token);
 
 /**
  * Flush out all data of the ring buffer
@@ -152,11 +152,11 @@ uint32_t ringbuff_read_until(ringbuff_t *rb, uint8_t *buffer, uint32_t buffer_si
  *
  * @param[in] rb ring buffer to flush
  */
-void ringbuff_flush(ringbuff_t *rb);
+void loribu_flush(loribu_t *rb);
 
 /**
  * @}
- * @defgroup ringbuff_information Information Functions
+ * @defgroup loribu_information Information Functions
  * Set of functions to query information of the ring buffer.
  * These functions do not affect the data buffer.
  * @{
@@ -171,7 +171,7 @@ void ringbuff_flush(ringbuff_t *rb);
  *
  * @return amount of used bytes of the ring buffer
  */
-uint32_t ringbuffer_used_space(ringbuff_t *rb);
+uint32_t loribu_used_space(loribu_t *rb);
 
 /**
  * Returns the amount of avaiable space
@@ -182,7 +182,7 @@ uint32_t ringbuffer_used_space(ringbuff_t *rb);
  *
  * @return amount of available bytes of the ring buffer
  */
-uint32_t ringbuff_available_space(ringbuff_t *rb);
+uint32_t loribu_available_space(loribu_t *rb);
 
 /**
  * Check if ring buffer is full
@@ -191,7 +191,7 @@ uint32_t ringbuff_available_space(ringbuff_t *rb);
  *
  * @return non zero if buffer is full
  */
-uint32_t ringbuff_is_full(ringbuff_t *rb);
+uint32_t loribu_is_full(loribu_t *rb);
 
 /**
  * Check if ring buffer is empty
@@ -200,7 +200,7 @@ uint32_t ringbuff_is_full(ringbuff_t *rb);
  *
  * @return non zero if buffer is empty
  */
-uint32_t ringbuff_is_empty(ringbuff_t *rb);
+uint32_t loribu_is_empty(loribu_t *rb);
 
 /**
  * Count how many \a byte are in the ring buffer
@@ -210,7 +210,7 @@ uint32_t ringbuff_is_empty(ringbuff_t *rb);
  *
  * @return amount of ocurrencies of \a byte in the ring buffer
  */
-uint32_t ringbuff_count(ringbuff_t *rb, uint8_t byte);
+uint32_t loribu_count(loribu_t *rb, uint8_t byte);
 
 /**
  * Read bytes from ring buffer without remove them
@@ -218,14 +218,14 @@ uint32_t ringbuff_count(ringbuff_t *rb, uint8_t byte);
  * This is useful when you want to check if a sequence of bytes
  * is available in the ring buffer before take the data.
  *
- * Note that \a ringbuff_peek doesn't check the buffer size, this means
+ * Note that \a loribu_peek doesn't check the buffer size, this means
  * \a peek_size must fit in the size of passed buffer.
  *
  * @param[in] rb ring buffer to peek
  * @param[out] buffer buffer where data read will be stored
  * @param[in] peek_size number of bytes to peek
  */
-void ringbuff_peek(ringbuff_t *rb, uint8_t *buffer, uint8_t peek_size);
+void loribu_peek(loribu_t *rb, uint8_t *buffer, uint8_t peek_size);
 
 /**
  * Search for a sequence of bytes
@@ -240,7 +240,7 @@ void ringbuff_peek(ringbuff_t *rb, uint8_t *buffer, uint8_t peek_size);
  *
  * @return position of the first byte of the sequence
  */
-int32_t ringbuff_search(ringbuff_t *rb, const uint8_t *to_search, uint32_t size);
+int32_t loribu_search(loribu_t *rb, const uint8_t *to_search, uint32_t size);
 
 /**
  * @}
@@ -252,8 +252,8 @@ int32_t ringbuff_search(ringbuff_t *rb, const uint8_t *to_search, uint32_t size)
 ************************************************************************************************************************
 */
 
-#if defined(RINGBUFF_ONLY_STATIC_ALLOCATION) && !defined(RINGBUFF_MAX_INSTANCES)
-#error "RINGBUFF_MAX_INSTANCES must be defined when RINGBUFF_ONLY_STATIC_ALLOCATION is defined"
+#if defined(LORIBU_ONLY_STATIC_ALLOCATION) && !defined(LORIBU_MAX_INSTANCES)
+#error "LORIBU_MAX_INSTANCES must be defined when LORIBU_ONLY_STATIC_ALLOCATION is defined"
 #endif
 
 

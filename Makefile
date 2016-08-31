@@ -3,7 +3,7 @@ CC ?= gcc
 
 # source directory and output name
 SRC_DIR = src
-OUTPUT = libringbuff.so
+OUTPUT = libloribu.so
 
 # flags for debugging
 ifeq ($(DEBUG), 1)

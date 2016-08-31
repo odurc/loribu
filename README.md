@@ -1,5 +1,5 @@
-ringbuff
-========
+loribu - Lord of the Ring Buffers
+=================================
 
 A simple ring buffer library implemented in C. The library can be built to use only static
 memory allocation, what make it interesting to employ in microcontrollers projects or other
@@ -28,12 +28,12 @@ The configuration of the library is done by setting 'define' macros in the heade
 under the configuration section.
 
 In order to use only static memory allocation, both 'define' macros need to be declared,
-*RINGBUFF_ONLY_STATIC_ALLOCATION* and *RINGBUFF_MAX_INSTANCES*.
+*LORIBU_ONLY_STATIC_ALLOCATION* and *LORIBU_MAX_INSTANCES*.
 
-    #define RINGBUFF_ONLY_STATIC_ALLOCATION
-    #define RINGBUFF_MAX_INSTANCES    4
+    #define LORIBU_ONLY_STATIC_ALLOCATION
+    #define LORIBU_MAX_INSTANCES    4
 
-The definition *RINGBUFF_MAX_INSTANCES* is used to set the maximum number of ring buffer instances
+The definition *LORIBU_MAX_INSTANCES* is used to set the maximum number of ring buffer instances
 that can be requested. As expected all instances are previously allocated as static variables.
 Note that only the object instances are statically allocated and not the buffer itself. Which means,
 in this setup, the user must to provide the buffer.
@@ -45,10 +45,10 @@ will use dynamic memory allocation as any regular ring buffer library.
 How to use
 ---
 
-To see details how to use the library, please check the online [API documentation](http://ricardocrudo.github.io/ringbuff).
+To see details how to use the library, please check the online [API documentation](http://ricardocrudo.github.io/loribu).
 
-* [Manipulation Functions](@ref ringbuff_manipulation)
-* [Information Functions](@ref ringbuff_information)
+* [Manipulation Functions](@ref loribu_manipulation)
+* [Information Functions](@ref loribu_information)
 
 
 License

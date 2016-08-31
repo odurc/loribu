@@ -26,7 +26,7 @@
 ************************************************************************************************************************
 */
 
-#include "ringbuff.h"
+#include "loribu.h"
 
 
 /*
@@ -36,14 +36,14 @@
 */
 
 // uses standard libc malloc/free functions if custom ones aren't defined
-#if !defined(RINGBUFF_ONLY_STATIC_ALLOCATION) && !defined(MALLOC)
+#if !defined(LORIBU_ONLY_STATIC_ALLOCATION) && !defined(MALLOC)
 #include <stdlib.h>
 #define MALLOC      malloc
 #define FREE        free
 #endif
 
 // uses internal functions if configured to use static allocation
-#ifdef RINGBUFF_ONLY_STATIC_ALLOCATION
+#ifdef LORIBU_ONLY_STATIC_ALLOCATION
 #define RB_ALLOC    rb_take
 #define RB_FREE     rb_give
 #define BUF_FREE    (void)
@@ -73,7 +73,7 @@
 ************************************************************************************************************************
 */
 
-struct ringbuff_t {
+struct loribu_t {
     uint32_t head, tail;
     uint8_t *buffer;
     uint32_t size;
@@ -87,8 +87,8 @@ struct ringbuff_t {
 ************************************************************************************************************************
 */
 
-#ifdef RINGBUFF_ONLY_STATIC_ALLOCATION
-ringbuff_t g_ringbuffers[RINGBUFF_MAX_INSTANCES];
+#ifdef LORIBU_ONLY_STATIC_ALLOCATION
+loribu_t g_ringbuffers[LORIBU_MAX_INSTANCES];
 #endif
 
 
@@ -98,7 +98,7 @@ ringbuff_t g_ringbuffers[RINGBUFF_MAX_INSTANCES];
 ************************************************************************************************************************
 */
 
-#ifdef RINGBUFF_ONLY_STATIC_ALLOCATION
+#ifdef LORIBU_ONLY_STATIC_ALLOCATION
 static inline void *rb_take(int n)
 {
     // unused parameter
@@ -108,17 +108,17 @@ static inline void *rb_take(int n)
     static unsigned int rb_counter;
 
     // first time ring buffers are requested
-    if (rb_counter < RINGBUFF_MAX_INSTANCES)
+    if (rb_counter < LORIBU_MAX_INSTANCES)
     {
-        ringbuff_t *rb  = &g_ringbuffers[rb_counter++];
+        loribu_t *rb  = &g_ringbuffers[rb_counter++];
         return rb;
     }
 
     // iterate all array searching for a free spot
     // a ring buffer is considered free when its buffer is null
-    for (int i = 0; i < RINGBUFF_MAX_INSTANCES; i++)
+    for (int i = 0; i < LORIBU_MAX_INSTANCES; i++)
     {
-        ringbuff_t *rb  = &g_ringbuffers[i];
+        loribu_t *rb  = &g_ringbuffers[i];
         if (!rb->buffer)
             return rb;
     }
@@ -130,7 +130,7 @@ static inline void rb_give(void *rb)
 {
     if (rb)
     {
-        ringbuff_t *self = rb;
+        loribu_t *self = rb;
         self->buffer = 0;
     }
 }
@@ -143,10 +143,10 @@ static inline void rb_give(void *rb)
 ************************************************************************************************************************
 */
 
-#ifndef RINGBUFF_ONLY_STATIC_ALLOCATION
-ringbuff_t *ringbuff_create(uint32_t buffer_size)
+#ifndef LORIBU_ONLY_STATIC_ALLOCATION
+loribu_t *loribu_create(uint32_t buffer_size)
 {
-    ringbuff_t *rb = (ringbuff_t *) MALLOC(sizeof(ringbuff_t));
+    loribu_t *rb = (loribu_t *) MALLOC(sizeof(loribu_t));
 
     if (rb)
     {
@@ -168,12 +168,12 @@ ringbuff_t *ringbuff_create(uint32_t buffer_size)
 }
 #endif
 
-ringbuff_t *ringbuff_create_from(uint8_t *buffer, uint32_t buffer_size)
+loribu_t *loribu_create_from(uint8_t *buffer, uint32_t buffer_size)
 {
     if (!buffer)
         return 0;
 
-    ringbuff_t *rb = (ringbuff_t *) RB_ALLOC(sizeof(ringbuff_t));
+    loribu_t *rb = (loribu_t *) RB_ALLOC(sizeof(loribu_t));
     if (rb)
     {
         rb->head = 0;
@@ -186,7 +186,7 @@ ringbuff_t *ringbuff_create_from(uint8_t *buffer, uint32_t buffer_size)
     return rb;
 }
 
-void ringbuff_destroy(ringbuff_t *rb)
+void loribu_destroy(loribu_t *rb)
 {
     if (rb)
     {
@@ -197,7 +197,7 @@ void ringbuff_destroy(ringbuff_t *rb)
     }
 }
 
-uint32_t ringbuff_write(ringbuff_t *rb, const uint8_t *data, uint32_t data_size)
+uint32_t loribu_write(loribu_t *rb, const uint8_t *data, uint32_t data_size)
 {
     uint32_t bytes = 0;
     const uint8_t *pdata, dummy = 0;
@@ -220,7 +220,7 @@ uint32_t ringbuff_write(ringbuff_t *rb, const uint8_t *data, uint32_t data_size)
     return bytes;
 }
 
-uint32_t ringbuff_read(ringbuff_t *rb, uint8_t *buffer, uint32_t size)
+uint32_t loribu_read(loribu_t *rb, uint8_t *buffer, uint32_t size)
 {
     uint32_t bytes = 0;
     uint8_t *data, dummy;
@@ -243,7 +243,7 @@ uint32_t ringbuff_read(ringbuff_t *rb, uint8_t *buffer, uint32_t size)
     return bytes;
 }
 
-uint32_t ringbuff_read_until(ringbuff_t *rb, uint8_t *buffer, uint32_t buffer_size, uint8_t token)
+uint32_t loribu_read_until(loribu_t *rb, uint8_t *buffer, uint32_t buffer_size, uint8_t token)
 {
     uint32_t bytes = 0;
     uint8_t *data = buffer, dummy;
@@ -255,7 +255,7 @@ uint32_t ringbuff_read_until(ringbuff_t *rb, uint8_t *buffer, uint32_t buffer_si
     }
 
     // does not read buffer if there is no occurrences of the token
-    if (ringbuff_count(rb, token) > 0)
+    if (loribu_count(rb, token) > 0)
     {
         // read until find the token or ring buffer be empty
         while (buffer_size > 0 && !RB_IS_EMPTY(rb))
@@ -277,33 +277,33 @@ uint32_t ringbuff_read_until(ringbuff_t *rb, uint8_t *buffer, uint32_t buffer_si
     return bytes;
 }
 
-void ringbuff_flush(ringbuff_t *rb)
+void loribu_flush(loribu_t *rb)
 {
     rb->head = 0;
     rb->tail = 0;
 }
 
-uint32_t ringbuffer_used_space(ringbuff_t *rb)
+uint32_t loribu_used_space(loribu_t *rb)
 {
     return ((rb->head - rb->tail) % rb->size);
 }
 
-uint32_t ringbuff_available_space(ringbuff_t *rb)
+uint32_t loribu_available_space(loribu_t *rb)
 {
     return (rb->size - ((rb->head - rb->tail) % rb->size) - 1);
 }
 
-uint32_t ringbuff_is_full(ringbuff_t *rb)
+uint32_t loribu_is_full(loribu_t *rb)
 {
     return RB_IS_FULL(rb);
 }
 
-uint32_t ringbuff_is_empty(ringbuff_t *rb)
+uint32_t loribu_is_empty(loribu_t *rb)
 {
     return RB_IS_EMPTY(rb);
 }
 
-uint32_t ringbuff_count(ringbuff_t *rb, uint8_t byte)
+uint32_t loribu_count(loribu_t *rb, uint8_t byte)
 {
     uint32_t count = 0;
     uint32_t tail, head;
@@ -324,7 +324,7 @@ uint32_t ringbuff_count(ringbuff_t *rb, uint8_t byte)
     return count;
 }
 
-void ringbuff_peek(ringbuff_t *rb, uint8_t *buffer, uint8_t peek_size)
+void loribu_peek(loribu_t *rb, uint8_t *buffer, uint8_t peek_size)
 {
     uint32_t tail, head;
     uint8_t *data = buffer;
@@ -340,7 +340,7 @@ void ringbuff_peek(ringbuff_t *rb, uint8_t *buffer, uint8_t peek_size)
     }
 }
 
-int32_t ringbuff_search(ringbuff_t *rb, const uint8_t *to_search, uint32_t size)
+int32_t loribu_search(loribu_t *rb, const uint8_t *to_search, uint32_t size)
 {
     uint32_t tail, head;
     uint32_t count = 0;
