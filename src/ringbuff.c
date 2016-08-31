@@ -35,14 +35,26 @@
 ************************************************************************************************************************
 */
 
-// if alternative malloc/free is not defined then use functions from libc
-#if !defined(RINGBUFF_NO_DYNAMIC_ALLOCATION) && !defined(MALLOC)
+// uses standard libc malloc/free functions if custom ones aren't defined
+#if !defined(RINGBUFF_ONLY_STATIC_ALLOCATION) && !defined(MALLOC)
 #include <stdlib.h>
-#define MALLOC  malloc
-#define FREE    free
+#define MALLOC      malloc
+#define FREE        free
 #endif
 
-// macros
+// uses internal functions if configured to use static allocation
+#ifdef RINGBUFF_ONLY_STATIC_ALLOCATION
+#define RB_ALLOC    rb_take
+#define RB_FREE     rb_give
+#define BUF_FREE    (void)
+
+// uses macro defined functions if configured to use dynamic allocation
+#else
+#define RB_ALLOC    MALLOC
+#define RB_FREE     FREE
+#define BUF_FREE    FREE
+#endif
+
 #define RB_IS_FULL(rb)      (rb->tail == (rb->head + 1) % rb->size)
 #define RB_IS_EMPTY(rb)     (rb->head == rb->tail)
 #define RB_INC(rb,idx)      (rb->idx = (rb->idx + 1) % rb->size)
@@ -65,6 +77,7 @@ struct ringbuff_t {
     uint32_t head, tail;
     uint8_t *buffer;
     uint32_t size;
+    int user_buffer;
 };
 
 
@@ -74,8 +87,8 @@ struct ringbuff_t {
 ************************************************************************************************************************
 */
 
-#ifdef RINGBUFF_NUM_INSTANCES
-ringbuff_t g_ringbuffers[RINGBUFF_NUM_INSTANCES];
+#ifdef RINGBUFF_ONLY_STATIC_ALLOCATION
+ringbuff_t g_ringbuffers[RINGBUFF_MAX_INSTANCES];
 #endif
 
 
@@ -85,6 +98,44 @@ ringbuff_t g_ringbuffers[RINGBUFF_NUM_INSTANCES];
 ************************************************************************************************************************
 */
 
+#ifdef RINGBUFF_ONLY_STATIC_ALLOCATION
+static inline void *rb_take(int n)
+{
+    // unused parameter
+    // it's here to make the function prototype compatible with malloc
+    (void) n;
+
+    static unsigned int rb_counter;
+
+    // first time ring buffers are requested
+    if (rb_counter < RINGBUFF_MAX_INSTANCES)
+    {
+        ringbuff_t *rb  = &g_ringbuffers[rb_counter++];
+        return rb;
+    }
+
+    // iterate all array searching for a free spot
+    // a ring buffer is considered free when its buffer is null
+    for (int i = 0; i < RINGBUFF_MAX_INSTANCES; i++)
+    {
+        ringbuff_t *rb  = &g_ringbuffers[i];
+        if (!rb->buffer)
+            return rb;
+    }
+
+    return 0;
+}
+
+static inline void rb_give(void *rb)
+{
+    if (rb)
+    {
+        ringbuff_t *self = rb;
+        self->buffer = 0;
+    }
+}
+#endif
+
 
 /*
 ************************************************************************************************************************
@@ -92,7 +143,7 @@ ringbuff_t g_ringbuffers[RINGBUFF_NUM_INSTANCES];
 ************************************************************************************************************************
 */
 
-#ifndef RINGBUFF_NO_DYNAMIC_ALLOCATION
+#ifndef RINGBUFF_ONLY_STATIC_ALLOCATION
 ringbuff_t *ringbuff_create(uint32_t buffer_size)
 {
     ringbuff_t *rb = (ringbuff_t *) MALLOC(sizeof(ringbuff_t));
@@ -101,7 +152,8 @@ ringbuff_t *ringbuff_create(uint32_t buffer_size)
     {
         rb->head = 0;
         rb->tail = 0;
-        rb->buffer = (uint8_t *) MALLOC(buffer_size);
+        rb->user_buffer = 0;
+        rb->buffer = MALLOC(buffer_size);
         rb->size = buffer_size;
 
         // checks memory allocation
@@ -116,52 +168,33 @@ ringbuff_t *ringbuff_create(uint32_t buffer_size)
 }
 #endif
 
-#ifdef RINGBUFF_NUM_INSTANCES
 ringbuff_t *ringbuff_create_from(uint8_t *buffer, uint32_t buffer_size)
 {
-    if (buffer == 0)
+    if (!buffer)
         return 0;
 
-    // search for free instance and return a ringbuffer
-    for (uint32_t i = 0; i < RINGBUFF_NUM_INSTANCES; i++)
+    ringbuff_t *rb = (ringbuff_t *) RB_ALLOC(sizeof(ringbuff_t));
+    if (rb)
     {
-        if (g_ringbuffers[i].buffer == 0)
-        {
-            ringbuff_t *rb = &g_ringbuffers[i];
-            rb->head = 0;
-            rb->tail = 0;
-            rb->buffer = buffer;
-            rb->size = buffer_size;
-
-            return rb;
-        }
+        rb->head = 0;
+        rb->tail = 0;
+        rb->user_buffer = 1;
+        rb->buffer = buffer;
+        rb->size = buffer_size;
     }
 
-    return 0;
+    return rb;
 }
-#endif
 
 void ringbuff_destroy(ringbuff_t *rb)
 {
-#ifdef RINGBUFF_NUM_INSTANCES
-    // for static buffer
-    for (uint32_t i = 0; i < RINGBUFF_NUM_INSTANCES; i++)
+    if (rb)
     {
-        if (rb == &g_ringbuffers[i])
-        {
-            rb->buffer = 0;
-            return;
-        }
+        if (rb->buffer && !rb->user_buffer)
+            BUF_FREE(rb->buffer);
+
+        RB_FREE(rb);
     }
-#endif
-
-#ifndef RINGBUFF_NO_DYNAMIC_ALLOCATION
-    // for dynamic allocated buffer
-    if (rb->buffer)
-        FREE(rb->buffer);
-
-    FREE(rb);
-#endif
 }
 
 uint32_t ringbuff_write(ringbuff_t *rb, const uint8_t *data, uint32_t data_size)

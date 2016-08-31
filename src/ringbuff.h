@@ -46,8 +46,8 @@
 ************************************************************************************************************************
 */
 
-//#define RINGBUFF_NO_DYNAMIC_ALLOCATION
-//#define RINGBUFF_NUM_INSTANCES    4
+#define RINGBUFF_ONLY_STATIC_ALLOCATION
+#define RINGBUFF_MAX_INSTANCES    4
 
 
 /*
@@ -252,8 +252,8 @@ int32_t ringbuff_search(ringbuff_t *rb, const uint8_t *to_search, uint32_t size)
 ************************************************************************************************************************
 */
 
-#if defined(RINGBUFF_NO_DYNAMIC_ALLOCATION) && !defined(RINGBUFF_NUM_INSTANCES)
-#error "RINGBUFF_NUM_INSTANCES must be defined when RINGBUFF_NO_DYNAMIC_ALLOCATION is defined"
+#if defined(RINGBUFF_ONLY_STATIC_ALLOCATION) && !defined(RINGBUFF_MAX_INSTANCES)
+#error "RINGBUFF_MAX_INSTANCES must be defined when RINGBUFF_ONLY_STATIC_ALLOCATION is defined"
 #endif
 
 
