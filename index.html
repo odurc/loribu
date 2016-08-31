@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>ringbuff: ringbuff</title>
+<title>loribu: loribu - Lord of the Ring Buffers</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">ringbuff
+   <div id="projectname">loribu
    </div>
   </td>
  </tr>
@@ -76,30 +76,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="headertitle">
-<div class="title">ringbuff </div>  </div>
+<div class="title">loribu - Lord of the Ring Buffers </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>A simple ring buffer library implemented in C. It's aimed to be used in microcontrollers and other devices with limited resources. However it should work for any system.</p>
+<div class="textblock"><p>A simple ring buffer library implemented in C. The library can be built to use only static memory allocation, what make it interesting to employ in microcontrollers projects or other devices used in embedded system.</p>
 <h2>Features </h2>
 <ul>
 <li>no external dependency</li>
-<li>configurable to not use dynamic memory allocation</li>
-<li>possibility to use user provided static buffer</li>
+<li>configurable to use only static memory allocation</li>
+<li>allows user to provide external variable as buffer</li>
 <li>useful functions as: read_until, count, search and peek</li>
 </ul>
 <h2>How to install </h2>
 <p>Simply copy the content of src directory to your work directory.</p>
 <h2>Configuration </h2>
-<p>The configuration of the library is done by setting defines in the header file, in the configuration section.</p>
-<p>If you don't want to use dynamic memory allocation you have to define both <em>RINGBUFF_NO_DYNAMIC_ALLOCATION</em> and <em>RINGBUFF_NUM_INSTANCES</em>. </p><pre class="fragment">#define RINGBUFF_NO_DYNAMIC_ALLOCATION
-#define RINGBUFF_NUM_INSTANCES    4
-</pre><p>The definition <em>RINGBUFF_NUM_INSTANCES</em> is used to set how many instances of ring buffer object you want to create. You also have the option to use mixed allocation, static and dynamic, by defining <em>RINGBUFF_NUM_INSTANCES</em> but not <em>RINGBUFF_NO_DYNAMIC_ALLOCATION</em>.</p>
-<p>To use only dynamic memory allocation keep both defines commented out.</p>
+<p>The configuration of the library is done by setting 'define' macros in the header file, under the configuration section.</p>
+<p>In order to use only static memory allocation, both 'define' macros need to be declared, <em>LORIBU_ONLY_STATIC_ALLOCATION</em> and <em>LORIBU_MAX_INSTANCES</em>. </p><pre class="fragment">#define LORIBU_ONLY_STATIC_ALLOCATION
+#define LORIBU_MAX_INSTANCES    4
+</pre><p>The definition <em>LORIBU_MAX_INSTANCES</em> is used to set the maximum number of ring buffer instances that can be requested. As expected all instances are previously allocated as static variables. Note that only the object instances are statically allocated and not the buffer itself. Which means, in this setup, the user must to provide the buffer.</p>
+<p>The default configuration, i.e. when no 'define' macros is declared (or they are kept commented out), will use dynamic memory allocation as any regular ring buffer library.</p>
 <h2>How to use </h2>
-<p>To see details how to use the library, please check the online <a href="http://ricardocrudo.github.io/ringbuff">API documentation</a>.</p>
+<p>To see details how to use the library, please check the online <a href="http://ricardocrudo.github.io/loribu">API documentation</a>.</p>
 <ul>
-<li><a class="el" href="group__ringbuff__manipulation.html">Manipulation Functions</a></li>
-<li><a class="el" href="group__ringbuff__information.html">Information Functions</a></li>
+<li><a class="el" href="group__loribu__manipulation.html">Manipulation Functions</a></li>
+<li><a class="el" href="group__loribu__information.html">Information Functions</a></li>
 </ul>
 <h2>License </h2>
 <p>MIT </p>

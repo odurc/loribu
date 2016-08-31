@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ringbuff_5ft',['ringbuff_t',['../ringbuff_8h.html#aa549b1e2df27a8baded2cdea6378bb58',1,'ringbuff.h']]]
+  ['loribu_5ft',['loribu_t',['../loribu_8h.html#a76284b29dfae9baa055e922a92326b79',1,'loribu.h']]]
 ];

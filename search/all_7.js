@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tail',['tail',['../structringbuff__t.html#abf7fbae3f96824bef3b42ea77420624e',1,'ringbuff_t']]]
+  ['size',['size',['../structloribu__t.html#a4251e0f57255fa3e7317cfee8ccfe0a2',1,'loribu_t']]]
 ];
