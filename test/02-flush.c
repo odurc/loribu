@@ -6,7 +6,8 @@
 
 int main(void)
 {
-    ringbuff_t *rb = ringbuff_create(512);
+    uint8_t user_buffer[512];
+    ringbuff_t *rb = ringbuff_create_from(user_buffer, 512);
 
     const char data[] = "hello world";
     int n = ringbuff_write(rb, (uint8_t *) data, sizeof data);

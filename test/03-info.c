@@ -6,7 +6,12 @@
 
 int main(void)
 {
+#ifdef RINGBUFF_ONLY_STATIC_ALLOCATION
+    uint8_t user_buffer[17];
+    ringbuff_t *rb = ringbuff_create_from(user_buffer, 17);
+#else
     ringbuff_t *rb = ringbuff_create(17);
+#endif
 
     const char data[] = "hello dear world";
     uint32_t len = strlen(data);
