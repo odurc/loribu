@@ -42,6 +42,11 @@
 #define FREE        free
 #endif
 
+// ensures MALLOC macro returns null if none allocation function is available
+#if defined(LORIBU_ONLY_STATIC_ALLOCATION) && !defined(MALLOC)
+#define MALLOC(n)   (0)
+#endif
+
 // uses internal functions if configured to use static allocation
 #ifdef LORIBU_ONLY_STATIC_ALLOCATION
 #define RB_ALLOC    rb_take
@@ -143,44 +148,31 @@ static inline void rb_give(void *rb)
 ************************************************************************************************************************
 */
 
-#ifndef LORIBU_ONLY_STATIC_ALLOCATION
-loribu_t *loribu_create(uint32_t buffer_size)
+loribu_t *loribu_create(uint8_t *buffer, uint32_t buffer_size)
 {
-    loribu_t *rb = (loribu_t *) MALLOC(sizeof(loribu_t));
+    loribu_t *rb = (loribu_t *) RB_ALLOC(sizeof(loribu_t));
 
     if (rb)
     {
         rb->head = 0;
         rb->tail = 0;
         rb->user_buffer = 0;
-        rb->buffer = MALLOC(buffer_size);
         rb->size = buffer_size;
 
-        // checks memory allocation
-        if (!rb->buffer)
+        if (buffer)
         {
-            FREE(rb);
-            rb = 0;
+            rb->user_buffer = 1;
+            rb->buffer = buffer;
         }
-    }
-
-    return rb;
-}
-#endif
-
-loribu_t *loribu_create_from(uint8_t *buffer, uint32_t buffer_size)
-{
-    if (!buffer)
-        return 0;
-
-    loribu_t *rb = (loribu_t *) RB_ALLOC(sizeof(loribu_t));
-    if (rb)
-    {
-        rb->head = 0;
-        rb->tail = 0;
-        rb->user_buffer = 1;
-        rb->buffer = buffer;
-        rb->size = buffer_size;
+        else
+        {
+            rb->buffer = MALLOC(buffer_size);
+            if (!rb->buffer)
+            {
+                RB_FREE(rb);
+                rb = 0;
+            }
+        }
     }
 
     return rb;

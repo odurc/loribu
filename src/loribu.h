@@ -39,6 +39,8 @@
 ************************************************************************************************************************
 */
 
+#define LORIBU_CREATE_BUFFER    0
+
 
 /*
 ************************************************************************************************************************
@@ -78,21 +80,17 @@ typedef struct loribu_t loribu_t;
 /**
  * Create a ring buffer object
  *
+ * The ring buffer object can be created from an existing buffer by
+ * providing it through \a buffer parameter.
+ * The macro LORIBU_CREATE_BUFFER should be used at \a buffer parameter
+ * when the creation of a new dynamically allocated buffer is required.
+ *
+ * @param[in] buffer a static or previously allocated buffer or LORIBU_CREATE_BUFFER
  * @param[in] buffer_size size of the buffer to be created
  *
  * @return pointer to loribu object or NULL if memory allocation fail
  */
-loribu_t *loribu_create(uint32_t buffer_size);
-
-/**
- * Create a ring buffer object from an existing buffer
- *
- * @param[in] buffer a static or previously allocated buffer
- * @param[in] buffer_size size of the buffer being passed
- *
- * @return pointer to loribu object or NULL if there is no free instances
- */
-loribu_t *loribu_create_from(uint8_t *buffer, uint32_t buffer_size);
+loribu_t *loribu_create(uint8_t *buffer, uint32_t buffer_size);
 
 /**
  * Destroy a ring buffer object
