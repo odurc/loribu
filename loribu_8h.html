@@ -86,6 +86,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -96,6 +97,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <p><a href="loribu_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ae6fa09c98d8c4560e5ace008cce7f3da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="loribu_8h.html#ae6fa09c98d8c4560e5ace008cce7f3da">LORIBU_CREATE_BUFFER</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ae6fa09c98d8c4560e5ace008cce7f3da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:a76284b29dfae9baa055e922a92326b79"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structloribu__t.html">loribu_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="loribu_8h.html#a76284b29dfae9baa055e922a92326b79">loribu_t</a></td></tr>
@@ -103,12 +109,9 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga703f15eda298f0ff5bf4ed2916b3281e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structloribu__t.html">loribu_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__loribu__manipulation.html#ga703f15eda298f0ff5bf4ed2916b3281e">loribu_create</a> (uint32_t buffer_size)</td></tr>
-<tr class="memdesc:ga703f15eda298f0ff5bf4ed2916b3281e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a ring buffer object.  <a href="group__loribu__manipulation.html#ga703f15eda298f0ff5bf4ed2916b3281e">More...</a><br /></td></tr>
-<tr class="separator:ga703f15eda298f0ff5bf4ed2916b3281e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac04a9710c14ecd6c90e0105c7132ca97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structloribu__t.html">loribu_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__loribu__manipulation.html#gac04a9710c14ecd6c90e0105c7132ca97">loribu_create_from</a> (uint8_t *buffer, uint32_t buffer_size)</td></tr>
-<tr class="memdesc:gac04a9710c14ecd6c90e0105c7132ca97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a ring buffer object from an existing buffer.  <a href="group__loribu__manipulation.html#gac04a9710c14ecd6c90e0105c7132ca97">More...</a><br /></td></tr>
-<tr class="separator:gac04a9710c14ecd6c90e0105c7132ca97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab86bf0107ff2f5194accfa40d9b6caaa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structloribu__t.html">loribu_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__loribu__manipulation.html#gab86bf0107ff2f5194accfa40d9b6caaa">loribu_create</a> (uint8_t *buffer, uint32_t buffer_size)</td></tr>
+<tr class="memdesc:gab86bf0107ff2f5194accfa40d9b6caaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a ring buffer object.  <a href="group__loribu__manipulation.html#gab86bf0107ff2f5194accfa40d9b6caaa">More...</a><br /></td></tr>
+<tr class="separator:gab86bf0107ff2f5194accfa40d9b6caaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1d32f97764e9d2fd880316d2187056aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__loribu__manipulation.html#ga1d32f97764e9d2fd880316d2187056aa">loribu_destroy</a> (<a class="el" href="structloribu__t.html">loribu_t</a> *rb)</td></tr>
 <tr class="memdesc:ga1d32f97764e9d2fd880316d2187056aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy a ring buffer object.  <a href="group__loribu__manipulation.html#ga1d32f97764e9d2fd880316d2187056aa">More...</a><br /></td></tr>
 <tr class="separator:ga1d32f97764e9d2fd880316d2187056aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,6 +149,19 @@ Functions</h2></td></tr>
 <tr class="memdesc:gae5653fb2cafd9521920cefe063b8e43b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search for a sequence of bytes.  <a href="group__loribu__information.html#gae5653fb2cafd9521920cefe063b8e43b">More...</a><br /></td></tr>
 <tr class="separator:gae5653fb2cafd9521920cefe063b8e43b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ae6fa09c98d8c4560e5ace008cce7f3da"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LORIBU_CREATE_BUFFER&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a class="anchor" id="a76284b29dfae9baa055e922a92326b79"></a>
 <div class="memitem">

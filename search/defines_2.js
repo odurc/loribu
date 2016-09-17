@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['malloc',['MALLOC',['../loribu_8c.html#a3e218828af7ddd3f4cd0d3772562b520',1,'loribu.c']]]
+  ['loribu_5fcreate_5fbuffer',['LORIBU_CREATE_BUFFER',['../loribu_8h.html#ae6fa09c98d8c4560e5ace008cce7f3da',1,'loribu.h']]]
 ];

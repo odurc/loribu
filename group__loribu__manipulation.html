@@ -87,12 +87,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga703f15eda298f0ff5bf4ed2916b3281e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structloribu__t.html">loribu_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__loribu__manipulation.html#ga703f15eda298f0ff5bf4ed2916b3281e">loribu_create</a> (uint32_t buffer_size)</td></tr>
-<tr class="memdesc:ga703f15eda298f0ff5bf4ed2916b3281e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a ring buffer object.  <a href="#ga703f15eda298f0ff5bf4ed2916b3281e">More...</a><br /></td></tr>
-<tr class="separator:ga703f15eda298f0ff5bf4ed2916b3281e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac04a9710c14ecd6c90e0105c7132ca97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structloribu__t.html">loribu_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__loribu__manipulation.html#gac04a9710c14ecd6c90e0105c7132ca97">loribu_create_from</a> (uint8_t *buffer, uint32_t buffer_size)</td></tr>
-<tr class="memdesc:gac04a9710c14ecd6c90e0105c7132ca97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a ring buffer object from an existing buffer.  <a href="#gac04a9710c14ecd6c90e0105c7132ca97">More...</a><br /></td></tr>
-<tr class="separator:gac04a9710c14ecd6c90e0105c7132ca97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab86bf0107ff2f5194accfa40d9b6caaa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structloribu__t.html">loribu_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__loribu__manipulation.html#gab86bf0107ff2f5194accfa40d9b6caaa">loribu_create</a> (uint8_t *buffer, uint32_t buffer_size)</td></tr>
+<tr class="memdesc:gab86bf0107ff2f5194accfa40d9b6caaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a ring buffer object.  <a href="#gab86bf0107ff2f5194accfa40d9b6caaa">More...</a><br /></td></tr>
+<tr class="separator:gab86bf0107ff2f5194accfa40d9b6caaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1d32f97764e9d2fd880316d2187056aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__loribu__manipulation.html#ga1d32f97764e9d2fd880316d2187056aa">loribu_destroy</a> (<a class="el" href="structloribu__t.html">loribu_t</a> *rb)</td></tr>
 <tr class="memdesc:ga1d32f97764e9d2fd880316d2187056aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy a ring buffer object.  <a href="#ga1d32f97764e9d2fd880316d2187056aa">More...</a><br /></td></tr>
 <tr class="separator:ga1d32f97764e9d2fd880316d2187056aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -112,37 +109,12 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Set of functions to manipulate the ring buffer. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga703f15eda298f0ff5bf4ed2916b3281e"></a>
+<a class="anchor" id="gab86bf0107ff2f5194accfa40d9b6caaa"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="structloribu__t.html">loribu_t</a>* loribu_create </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>buffer_size</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Create a ring buffer object. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">buffer_size</td><td>size of the buffer to be created</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>pointer to loribu object or NULL if memory allocation fail </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gac04a9710c14ecd6c90e0105c7132ca97"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structloribu__t.html">loribu_t</a>* loribu_create_from </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>buffer</em>, </td>
@@ -161,15 +133,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Create a ring buffer object from an existing buffer. </p>
+<p>Create a ring buffer object. </p>
+<p>The ring buffer object can be created from an existing buffer by providing it through <em>buffer</em> parameter. The macro LORIBU_CREATE_BUFFER should be used at <em>buffer</em> parameter when the creation of a new dynamically allocated buffer is required.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">buffer</td><td>a static or previously allocated buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">buffer_size</td><td>size of the buffer being passed</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buffer</td><td>a static or previously allocated buffer or LORIBU_CREATE_BUFFER </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buffer_size</td><td>size of the buffer to be created</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>pointer to loribu object or NULL if there is no free instances </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>pointer to loribu object or NULL if memory allocation fail </dd></dl>
 
 </div>
 </div>
