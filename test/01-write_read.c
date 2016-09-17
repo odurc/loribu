@@ -6,12 +6,10 @@
 
 int main(void)
 {
-#ifdef LORIBU_ONLY_STATIC_ALLOCATION
-    uint8_t user_buffer[512];
-    loribu_t *rb = loribu_create_from(user_buffer, 512);
-#else
-    loribu_t *rb = loribu_create(512);
-#endif
+    loribu_t *rb = loribu_create(LORIBU_CREATE_BUFFER, 512);
+
+    if (!rb)
+        return 1;
 
     const char data[] = "hello world";
     int n = loribu_write(rb, (uint8_t *) data, sizeof data);

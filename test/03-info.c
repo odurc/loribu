@@ -6,12 +6,8 @@
 
 int main(void)
 {
-#ifdef LORIBU_ONLY_STATIC_ALLOCATION
     uint8_t user_buffer[17];
-    loribu_t *rb = loribu_create_from(user_buffer, 17);
-#else
-    loribu_t *rb = loribu_create(17);
-#endif
+    loribu_t *rb = loribu_create(user_buffer, 17);
 
     const char data[] = "hello dear world";
     uint32_t len = strlen(data);

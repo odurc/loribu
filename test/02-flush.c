@@ -7,7 +7,7 @@
 int main(void)
 {
     uint8_t user_buffer[512];
-    loribu_t *rb = loribu_create_from(user_buffer, 512);
+    loribu_t *rb = loribu_create(user_buffer, 512);
 
     const char data[] = "hello world";
     int n = loribu_write(rb, (uint8_t *) data, sizeof data);
