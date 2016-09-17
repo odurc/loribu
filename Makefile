@@ -13,7 +13,7 @@ CFLAGS += -O3
 endif
 
 # flags
-CFLAGS += -Wall -Wextra -fPIC
+CFLAGS += $(CONFIG) -Wall -Wextra -fPIC -std=gnu99
 LDFLAGS += -shared
 
 # libraries

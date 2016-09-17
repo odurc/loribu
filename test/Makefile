@@ -13,7 +13,7 @@ endif
 
 # flags
 LIB_NAME=$(shell basename ../*.so)
-CFLAGS += -Wall -Wextra
+CFLAGS += -Wall -Wextra -std=gnu99
 LDFLAGS += -L.. -Wl,-rpath=..
 
 # includes and libraries
