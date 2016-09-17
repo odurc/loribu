@@ -12,3 +12,10 @@ script:
     - cd test
     - make
     - make run-tests
+    - cd -
+    - make clean
+    - make CONFIG="-DLORIBU_ONLY_STATIC_ALLOCATION -DLORIBU_MAX_INSTANCES=10"
+    - cd test
+    - make clean
+    - make
+    - make run-tests
