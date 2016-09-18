@@ -1,4 +1,3 @@
-
 CC ?= gcc
 
 # source directory

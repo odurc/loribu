@@ -1,9 +1,11 @@
-
 CC ?= gcc
+
+# library name
+LIB_NAME = loribu
 
 # source directory and output name
 SRC_DIR = src
-OUTPUT = libloribu.so
+OUTPUT = lib$(LIB_NAME).so
 
 # flags for debugging
 ifeq ($(DEBUG), 1)
@@ -30,4 +32,4 @@ $(OUTPUT): $(OBJ)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	rm -f $(SRC_DIR)/*.o $(OUTPUT)*
+	rm -f $(OBJ) $(OUTPUT)
