@@ -1,4 +1,7 @@
 /*
+ * loribu - Lord of the Ring Buffers
+ * https://github.com/ricardocrudo/loribu
+ *
  * Copyright (c) 2016 Ricardo Crudo <ricardo.crudo@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
