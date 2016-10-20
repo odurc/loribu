@@ -17,5 +17,6 @@ var searchData=
   ['loribu_5fsearch',['loribu_search',['../group__loribu__information.html#gae5653fb2cafd9521920cefe063b8e43b',1,'loribu_search(loribu_t *rb, const uint8_t *to_search, uint32_t size):&#160;loribu.c'],['../group__loribu__information.html#gae5653fb2cafd9521920cefe063b8e43b',1,'loribu_search(loribu_t *rb, const uint8_t *to_search, uint32_t size):&#160;loribu.c']]],
   ['loribu_5ft',['loribu_t',['../structloribu__t.html',1,'loribu_t'],['../loribu_8h.html#a76284b29dfae9baa055e922a92326b79',1,'loribu_t():&#160;loribu.h']]],
   ['loribu_5fused_5fspace',['loribu_used_space',['../group__loribu__information.html#gab5c351450fc70b2dcb7b9fbbfe5b45d2',1,'loribu_used_space(loribu_t *rb):&#160;loribu.c'],['../group__loribu__information.html#gab5c351450fc70b2dcb7b9fbbfe5b45d2',1,'loribu_used_space(loribu_t *rb):&#160;loribu.c']]],
+  ['loribu_5fversion',['LORIBU_VERSION',['../loribu_8h.html#a1106a61658899efa093e6324fb6bb35e',1,'loribu.h']]],
   ['loribu_5fwrite',['loribu_write',['../group__loribu__manipulation.html#ga0edbb037c3f4d6dce007d75c5ffbf19f',1,'loribu_write(loribu_t *rb, const uint8_t *data, uint32_t data_size):&#160;loribu.c'],['../group__loribu__manipulation.html#ga0edbb037c3f4d6dce007d75c5ffbf19f',1,'loribu_write(loribu_t *rb, const uint8_t *data, uint32_t data_size):&#160;loribu.c']]]
 ];
