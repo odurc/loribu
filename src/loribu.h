@@ -42,6 +42,10 @@
 ****************************************************************************************************
 */
 
+// library version
+#define LORIBU_VERSION      "1.0.0"
+
+// macro to ask for the buffer creation
 #define LORIBU_CREATE_BUFFER    0
 
 
