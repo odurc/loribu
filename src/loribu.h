@@ -26,6 +26,11 @@
 #ifndef LORIBU_H
 #define LORIBU_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 
 /*
 ****************************************************************************************************
@@ -97,7 +102,7 @@ typedef struct loribu_t loribu_t;
  *
  * @return pointer to loribu object or NULL if memory allocation fail
  */
-loribu_t *loribu_create(uint8_t *buffer, uint32_t buffer_size);
+loribu_t* loribu_create(uint8_t *buffer, uint32_t buffer_size);
 
 /**
  * Destroy a ring buffer object
@@ -261,5 +266,9 @@ int32_t loribu_search(loribu_t *rb, const uint8_t *to_search, uint32_t size);
 #error "LORIBU_ONLY_STATIC_ALLOCATION requires LORIBU_MAX_INSTANCES macro definition."
 #endif
 
+#ifdef __cplusplus
+}
+#endif
 
+// LORIBU_H
 #endif

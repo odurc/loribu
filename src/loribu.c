@@ -107,7 +107,7 @@ loribu_t g_ringbuffers[LORIBU_MAX_INSTANCES];
 */
 
 #ifdef LORIBU_ONLY_STATIC_ALLOCATION
-static inline void *rb_take(int n)
+static inline void* rb_take(int n)
 {
     // unused parameter
     // it's here to make the function prototype compatible with malloc
@@ -151,7 +151,7 @@ static inline void rb_give(void *rb)
 ****************************************************************************************************
 */
 
-loribu_t *loribu_create(uint8_t *buffer, uint32_t buffer_size)
+loribu_t* loribu_create(uint8_t *buffer, uint32_t buffer_size)
 {
     loribu_t *rb = (loribu_t *) RB_ALLOC(sizeof(loribu_t));
 
@@ -169,7 +169,7 @@ loribu_t *loribu_create(uint8_t *buffer, uint32_t buffer_size)
         }
         else
         {
-            rb->buffer = MALLOC(buffer_size);
+            rb->buffer = (uint8_t *) MALLOC(buffer_size);
             if (!rb->buffer)
             {
                 RB_FREE(rb);
